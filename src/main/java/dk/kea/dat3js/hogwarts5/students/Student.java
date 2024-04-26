@@ -13,6 +13,7 @@ public class Student {
   private String firstName;
   private String middleName;
   private String lastName;
+  private String name;
   @ManyToOne
   private House house;
   private Integer schoolYear; // 1-7

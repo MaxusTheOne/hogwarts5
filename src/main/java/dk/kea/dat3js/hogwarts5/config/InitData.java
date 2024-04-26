@@ -70,5 +70,6 @@ public class InitData implements CommandLineRunner {
       houseRepository.save(ravenclaw);
 
 
+
   }
 }

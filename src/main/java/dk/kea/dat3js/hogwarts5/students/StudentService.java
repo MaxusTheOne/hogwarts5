@@ -86,6 +86,19 @@ public class StudentService {
   }
 
   private Student fromDTO(StudentRequestDTO studentDTO) {
+    if (studentDTO.name() != null) {
+      String[] names = studentDTO.name().split(" ");
+      if (names.length == 3) {
+        return new Student(
+            names[0],
+            names[1],
+            names[2],
+            houseService.findById(studentDTO.house()).orElseThrow(),
+            studentDTO.schoolYear()
+        );
+      }
+    }
+
     Student entity = new Student(
         studentDTO.firstName(),
         studentDTO.middleName(),
