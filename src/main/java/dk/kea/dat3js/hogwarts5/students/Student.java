@@ -97,9 +97,9 @@ public class Student {
         middleName = "";
       for (int i = 1; i < names.length - 1; i++) {
         if (i == names.length - 2) {
-          middleName += names[i];
+          middleName += capitalize(names[i]);
         } else {
-          middleName += names[i] + " ";
+          middleName += capitalize(names[i]) + " ";
         }
       }
       lastName = names[names.length - 1];
