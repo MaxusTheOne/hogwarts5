@@ -45,7 +45,7 @@ public class Student {
   }
 
   public void setFirstName(String firstName) {
-    this.firstName = firstName;
+    this.firstName = capitalize(firstName);
   }
 
   public String getMiddleName() {
@@ -53,7 +53,7 @@ public class Student {
   }
 
   public void setMiddleName(String middleName) {
-    this.middleName = middleName;
+    this.middleName = capitalize(middleName);
   }
 
   public String getLastName() {
@@ -61,7 +61,7 @@ public class Student {
   }
 
   public void setLastName(String lastName) {
-    this.lastName = lastName;
+    this.lastName = capitalize(lastName);
   }
 
   public House getHouse() {
@@ -79,6 +79,46 @@ public class Student {
   public void setSchoolYear(Integer schoolYear) {
     this.schoolYear = schoolYear;
   }
+
+  public String getFullName() {
+    return firstName + " " + (middleName != null ? middleName + " " : "") + lastName;
+  }
+
+  public String setFullName(String fullName) {
+    if (fullName == null) {
+      fullName = "";
+    }
+    String[] names = fullName.split(" ");
+    if (names.length == 0) {
+      return "";
+    }
+    firstName = names[0];
+    if (names.length > 2) {
+        middleName = "";
+      for (int i = 1; i < names.length - 1; i++) {
+        if (i == names.length - 2) {
+          middleName += names[i];
+        } else {
+          middleName += names[i] + " ";
+        }
+      }
+      lastName = names[names.length - 1];
+    } else if(names.length > 1){
+      lastName = names[1];
+      middleName = null;
+    } else {
+      lastName = null;
+      middleName = null;
+    }
+    return getFullName();
+  }
+
+    public String capitalize(String str) {
+      if (str == null || str.isEmpty()) {
+        return str;
+      }
+        return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+    }
 
   @Override
   public boolean equals(Object o) {
