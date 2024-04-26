@@ -1,12 +1,13 @@
 package dk.kea.dat3js.hogwarts5.students;
 
 import dk.kea.dat3js.hogwarts5.house.House;
+import dk.kea.dat3js.hogwarts5.person.personWithNames;
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
-public class Student {
+public class Student implements personWithNames {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
@@ -81,45 +82,8 @@ public class Student {
     this.schoolYear = schoolYear;
   }
 
-  public String getFullName() {
-    return firstName + " " + (middleName != null ? middleName + " " : "") + lastName;
-  }
 
-  public String setFullName(String fullName) {
-    if (fullName == null) {
-      fullName = "";
-    }
-    String[] names = fullName.split(" ");
-    if (names.length == 0) {
-      return "";
-    }
-    firstName = names[0];
-    if (names.length > 2) {
-        middleName = "";
-      for (int i = 1; i < names.length - 1; i++) {
-        if (i == names.length - 2) {
-          middleName += capitalize(names[i]);
-        } else {
-          middleName += capitalize(names[i]) + " ";
-        }
-      }
-      lastName = names[names.length - 1];
-    } else if(names.length > 1){
-      lastName = names[1];
-      middleName = null;
-    } else {
-      lastName = null;
-      middleName = null;
-    }
-    return getFullName();
-  }
 
-    public String capitalize(String str) {
-      if (str == null || str.isEmpty()) {
-        return str;
-      }
-        return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
-    }
 
   @Override
   public boolean equals(Object o) {
