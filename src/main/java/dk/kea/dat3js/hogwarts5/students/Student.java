@@ -18,6 +18,7 @@ public class Student implements personWithNames {
   @ManyToOne
   private House house;
   private Integer schoolYear; // 1-7
+  private boolean prefect;
 
   public Student() {
   }
@@ -32,6 +33,7 @@ public class Student implements personWithNames {
     this.lastName = lastName;
     this.house = house;
     this.schoolYear = schoolYear;
+    this.prefect = false;
   }
 
   public int getId() {
@@ -80,6 +82,14 @@ public class Student implements personWithNames {
 
   public void setSchoolYear(Integer schoolYear) {
     this.schoolYear = schoolYear;
+  }
+
+  public boolean isPrefect() {
+      return prefect;
+  }
+
+  public void setPrefect(boolean prefect) {
+      this.prefect = prefect;
   }
 
 

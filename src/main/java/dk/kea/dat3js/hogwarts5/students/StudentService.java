@@ -77,9 +77,10 @@ public class StudentService {
         studentEntity.getFirstName(),
         studentEntity.getMiddleName(),
         studentEntity.getLastName(),
-        studentEntity.getHouse().getName(),
         studentEntity.getFullName(),
-        studentEntity.getSchoolYear()
+        studentEntity.getHouse().getName(),
+        studentEntity.getSchoolYear(),
+        studentEntity.isPrefect()
     );
 
     return dto;
@@ -112,5 +113,49 @@ public class StudentService {
     }
 
     return entity;
+  }
+
+  public StudentResponseDTO makePrefect(int id) {
+  Optional<Student> student = studentRepository.findById(id);
+    if(student.isPresent()) {
+      Student studentToUpdate = student.get();
+      studentToUpdate.setPrefect(true);
+      return toDTO(studentRepository.save(studentToUpdate));
+    } else {
+      return null;
+    }
+  }
+
+  public StudentResponseDTO getPrefect(int id) {
+    Optional<Student> student = studentRepository.findById(id);
+    if(student.isPresent()) {
+      Student studentToUpdate = student.get();
+      if(studentToUpdate.isPrefect()) {
+        return toDTO(studentToUpdate);
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  public List<StudentResponseDTO> getAllPrefects() {
+    return studentRepository.findAll().stream().filter(Student::isPrefect).map(this::toDTO).toList();
+  }
+
+  public List<StudentResponseDTO> getPrefectsFromHouse(String house) {
+    return studentRepository.findAll().stream().filter(student -> student.getHouse().getName().equals(house) && student.isPrefect()).map(this::toDTO).toList();
+  }
+
+  public StudentResponseDTO removePrefect(int id) {
+    Optional<Student> student = studentRepository.findById(id);
+    if(student.isPresent()) {
+      Student studentToUpdate = student.get();
+      studentToUpdate.setPrefect(false);
+      return toDTO(studentRepository.save(studentToUpdate));
+    } else {
+      return null;
+    }
   }
 }
