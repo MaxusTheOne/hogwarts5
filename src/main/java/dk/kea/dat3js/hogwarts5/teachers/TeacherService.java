@@ -82,6 +82,7 @@ public class TeacherService {
         teacherEntity.getFirstName(),
         teacherEntity.getMiddleName(),
         teacherEntity.getLastName(),
+        teacherEntity.getFullName(),
         teacherEntity.getHouse().getName(),
         teacherEntity.getMainSubject(),
         teacherEntity.getEmploymentDate()
@@ -91,6 +92,22 @@ public class TeacherService {
   }
 
   private Teacher fromDTO(TeacherRequestDTO teacherDTO) {
+    if (teacherDTO.name() != null){
+      String[] names = teacherDTO.name().split(" ");
+      if (names.length == 0) {
+        return null;
+      }
+      Teacher entity = new Teacher(
+          names[0],
+          names.length > 2 ? names[1] : null,
+          names.length > 2 ? names[2] : names[1],
+          houseService.findById(teacherDTO.house()).orElseThrow(),
+          teacherDTO.mainSubject(),
+          teacherDTO.employmentDate()
+      );
+        return entity;
+    }
+
     Teacher entity = new Teacher(
         teacherDTO.firstName(),
         teacherDTO.middleName(),
